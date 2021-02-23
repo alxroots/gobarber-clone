@@ -1,5 +1,5 @@
 
-import Appointment from '../models/Appointments';
+import Appointment from '../infra/typeorm/entities/Appointments';
 import { EntityRepository, Repository } from 'typeorm';
 
 
