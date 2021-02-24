@@ -30,6 +30,14 @@
         {
           "ts": "never"
         }
+      ],
+      "@typescript-eslint/naming-convention":[
+        "error",
+        {
+          "selector": "inteface",
+          "prefix": ["I"],
+          "format": ["PascalCase"]
+        }
       ]
     },
     "settings": {

@@ -1,8 +1,7 @@
 import Router from 'express';
-import { getCustomRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
+import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 
 //Middleware
@@ -15,12 +14,11 @@ const appointmentsRouter = Router();
 appointmentsRouter.use(ensureAuthenticated);
 
 //Lista os appointments existentes
-appointmentsRouter.get('/', async(request, response) => {
-  const appointmentRepository = getCustomRepository(AppointmentsRepository);
+// appointmentsRouter.get('/', async(request, response) => {
 
-  const appointmentsList = await appointmentRepository.find();
-  return response.json(appointmentsList);
-});
+//   const appointmentsList = await appointmentRepository.find();
+//   return response.json(appointmentsList);
+// });
 
 //Cria um novo Appointment
 appointmentsRouter.post('/', async(request, response) => {
@@ -29,13 +27,12 @@ appointmentsRouter.post('/', async(request, response) => {
   //convert data
   const parsedDate = parseISO(date)
   //regra de negócio
-  const createAppointment = new CreateAppointmentService();
+
+  const appointmentsRepository = new AppointmentsRepository(); 
+  const createAppointment = new CreateAppointmentService(appointmentsRepository);
   const appointment = await createAppointment.execute({ date: parsedDate, provider_id });
   
   return response.json(appointment)
-
-  return response.status(400).json({ error: err.message });
-  
   
 });
 
