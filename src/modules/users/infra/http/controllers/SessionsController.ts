@@ -20,8 +20,6 @@ export default class SessionsController {
         
       
         return response.json({ user, token });
-      
-        return response.status(err.statuscode).json({ error: err.message });
 
     }
 }
