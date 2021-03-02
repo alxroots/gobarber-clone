@@ -6,7 +6,7 @@ import User from '../../infra/typeorm/entities/Users';
 import { fi } from 'date-fns/locale';
 
 
-class UsersRepository implements IUsersRepository {
+class FakeUsersRepository implements IUsersRepository {
 
     private users: User[] = [];
 
@@ -44,4 +44,4 @@ class UsersRepository implements IUsersRepository {
     }
 }
 
-export default UsersRepository;
+export default FakeUsersRepository;
