@@ -14,10 +14,10 @@ let sendForgotPasswordAndEmailService: SendForgotPasswordAndEmailService;
 describe('SendForgotPasswordEmail', ()=>{
 
     beforeEach(() => {
-        const fakeUsersRepository = new FakeUsersRepository();
-        const fakeMailProvider = new FakeMailProvider()
-        const fakeUserTokensRepository = new FakeUserTokensRepository();
-        const sendForgotPasswordAndEmailService = new SendForgotPasswordAndEmailService(
+        fakeUsersRepository = new FakeUsersRepository();
+        fakeMailProvider = new FakeMailProvider()
+        fakeUserTokensRepository = new FakeUserTokensRepository();
+        sendForgotPasswordAndEmailService = new SendForgotPasswordAndEmailService(
             fakeUsersRepository,
             fakeMailProvider,
             fakeUserTokensRepository
@@ -52,7 +52,7 @@ describe('SendForgotPasswordEmail', ()=>{
 
     });
 
-    it('should not be able to recover a non-existing password', async()=>{
+    it('should generate a forgot password token', async()=>{
 
         const generateToken = jest.spyOn(fakeUserTokensRepository, 'generate')
         
@@ -62,7 +62,7 @@ describe('SendForgotPasswordEmail', ()=>{
             password: '123456'
         })
         await sendForgotPasswordAndEmailService.execute({
-            email: 'johdoe@example.com'
+            email: 'johndoe@example.com'
         })
 
         expect(generateToken).toHaveBeenCalledWith(user.id)
